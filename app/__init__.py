@@ -1,23 +1,25 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from config import Config
-
+from config import app_config
 
 db = SQLAlchemy()
 migrate = Migrate()
 
-def create_app(config_class=Config):
+def create_app(config_class=app_config['development']):
   app = Flask(__name__)
   db.init_app(app)
-  app.config.from_object(Config)
+  app.config.from_object(config_class)
   migrate.init_app(app, db)
   
   from app.center import center_api 
-  app.register_blueprint(center_api)
+  app.register_blueprint(center_api, url_prefix = '/api')
 
   from app.user import user_api
-  app.register_blueprint(user_api)
+  app.register_blueprint(user_api, url_prefix = '/api')
+
+  from app.event import event_api
+  app.register_blueprint(event_api, url_prefix = '/api')
 
   return app
 

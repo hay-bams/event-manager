@@ -1,5 +1,7 @@
 from app import db
 from datetime import datetime
+from app.exception import ValidationError
+from werkzeug.security import generate_password_hash, check_password_hash
 
 user_event = db.Table(
   'user_event',
@@ -10,7 +12,7 @@ user_event = db.Table(
 user_center = db.Table(
   'user_center',
   db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
-  db.Column('center_id', db.Integer, db.ForeignKey('center.id')),
+  db.Column('center_id', db.Integer, db.ForeignKey('center.id'))
 )
 
 center_event = db.Table(
@@ -21,8 +23,8 @@ center_event = db.Table(
 
 class User(db.Model):
   id = db.Column(db.Integer, primary_key=True)
-  username = db.Column(db.String(64), index=True, unique=True)
-  password = db.Column(db.String(64), index=True, unique=True)
+  username = db.Column(db.String(64), index=True, unique=True, nullable=False)
+  password = db.Column(db.String(64), index=True, nullable=False)
   centers = db.relationship(
     'Center', 
     secondary=user_center, 
@@ -33,6 +35,22 @@ class User(db.Model):
     secondary=user_event,
     backref=db.backref('user',
     lazy= 'dynamic'), lazy='dynamic')
+
+  def set_password_hash(self, password):
+    self.password = generate_password_hash(password)
+
+  def verify_password(self, password):
+    password_hash = self.password
+    return check_password_hash(password_hash, password)
+
+  def import_data(self, data):
+    try:
+      for field in ['username', 'password']:
+        setattr(self, field, data[field])
+    except KeyError as e:
+      raise ValidationError('Invalid user, missing ' + e.args[0])
+    return self
+
 
   def __repr__(self):
     return '<User {}>'.format(self.username)
