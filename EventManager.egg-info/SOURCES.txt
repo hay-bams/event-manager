@@ -1,0 +1,8 @@
+README.md
+EventManager.egg-info/PKG-INFO
+EventManager.egg-info/SOURCES.txt
+EventManager.egg-info/dependency_links.txt
+EventManager.egg-info/entry_points.txt
+EventManager.egg-info/requires.txt
+EventManager.egg-info/top_level.txt
+cli/cli.py

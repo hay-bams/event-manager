@@ -2,3 +2,4 @@ venv
 center.db
 event_manager.db
 .vscode
+.pytest_cache/v/cache

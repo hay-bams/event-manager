@@ -3,7 +3,6 @@ from app.center import center_api
 from app.models import Center
 
 
-
 @center_api.route('/centers', methods = ['GET'])
 def get_all_centers(self):
   return jsonify(Center.query.all())

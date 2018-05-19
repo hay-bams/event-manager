@@ -1,0 +1,4 @@
+[
+  "app/tests/test_user.py::TestUser::()::test_invalid_signup",
+  "app/tests/test_user.py::TestUser::()::test_successful_signup"
+]

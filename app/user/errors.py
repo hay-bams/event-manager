@@ -19,17 +19,10 @@ def bad_request(e):
 @user_api.app_errorhandler(404)
 def not_found(e):
   return error_response(404, 'Invalid resource URI')
-  # response = jsonify({'status': 404, 'error': 'not found',
-  #                     'message': 'invalid Resource URI'})
-  # response.status_code = 404
-  # return response
 
 @user_api.app_errorhandler(500)  # this has to be an app-wide handler
 def internal_server_error(e):
   db.session.rollback()
   return error_response(500, e.args[0])
-  # response = jsonify({'status': 500, 'error': 'internal server error',
-  #                     'message': e.args[0]})
-  # response.status_code = 500
-  # return response
-    
+
+  
