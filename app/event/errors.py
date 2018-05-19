@@ -1,6 +1,6 @@
 from flask import jsonify
-from app.user import user_api
-from app.exception import ValidationError
+from app.event import event_api
+from app.exception import AuthenticationError, ValidationError
 from werkzeug.http import HTTP_STATUS_CODES
 
 def error_response(status_code, message=None):
@@ -12,15 +12,19 @@ def error_response(status_code, message=None):
   response.status_code = status_code
   return response
 
-@user_api.app_errorhandler(ValidationError)
+@event_api.app_errorhandler(ValidationError)
 def bad_request(e):
   return error_response(400, e.args[0])
 
-@user_api.app_errorhandler(404)
+@event_api.app_errorhandler(AuthenticationError)
+def bad_request(e):
+  return error_response(400, e.args[0])
+
+@event_api.app_errorhandler(404)
 def not_found(e):
   return error_response(404, 'Invalid resource URI')
 
-@user_api.app_errorhandler(500)  # this has to be an app-wide handler
+@event_api.app_errorhandler(500)  # this has to be an app-wide handler
 def internal_server_error(e):
   db.session.rollback()
   return error_response(500, e.args[0])

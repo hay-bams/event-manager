@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -5,11 +7,12 @@ from config import app_config
 
 db = SQLAlchemy()
 migrate = Migrate()
+config_name = os.getenv('FLASK_ENV')
 
 def create_app(config_class=app_config['development']):
   app = Flask(__name__)
-  db.init_app(app)
   app.config.from_object(config_class)
+  db.init_app(app)
   migrate.init_app(app, db)
   
   from app.center import center_api 
