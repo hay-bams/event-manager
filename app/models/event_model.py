@@ -1,5 +1,5 @@
 import os
-from app import db
+from app import db, ma
 from datetime import datetime
 from app.exception import ValidationError
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -14,3 +14,12 @@ class Event(db.Model, ModelOperations):
 
   def __repr__(self):
     return '<Event {}>'.format(self.event_name)
+
+
+"""
+define output format with marshmallow
+"""
+
+class EventSchema(ma.ModelSchema):
+  class Meta:
+    model = Event

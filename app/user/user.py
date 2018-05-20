@@ -25,7 +25,7 @@ def signup():
     'status': 'True',
     'message': 'User successfully signed up',
     'token': str(token)
-  })
+  }), 201
 
 @user_api.route('/user/signin', methods = ['POST'])
 def signin():
@@ -38,6 +38,12 @@ def signin():
     if not user.verify_password(request.form['password']):
       return jsonify({'message': 'invalid password'})
 
-    return jsonify({'message': 'user signed in successfully'})
+    token = user.encode_token()
+
+    return jsonify({
+      'status': 'True',
+      'message': 'User successfully signed in',
+      'token': str(token)
+    }), 201
   except KeyError as error:
     raise ValidationError('Invalid user, missing ' + error.args[0])
