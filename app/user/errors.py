@@ -13,7 +13,6 @@ def error_response(status_code, message=None):
     response.status_code = status_code
     return response
 
-
 @user_bp.app_errorhandler(ValidationError)
 def bad_request(e):
     return error_response(400, e.args[0])

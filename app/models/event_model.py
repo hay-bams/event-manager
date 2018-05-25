@@ -21,7 +21,6 @@ class Event(db.Model, ModelOperations):
 define output format with marshmallow
 """
 
-
 class EventSchema(ma.ModelSchema):
     class Meta:
         model = Event

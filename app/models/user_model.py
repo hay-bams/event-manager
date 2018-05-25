@@ -44,3 +44,4 @@ class User(db.Model, ModelOperations):
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
+

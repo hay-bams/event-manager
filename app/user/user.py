@@ -7,7 +7,6 @@ from app.exception import ValidationError
 from flask_restful import Resource
 from app.user import errors
 
-
 class Signup(Resource):
     def post(self):
         new_user = User()
@@ -54,3 +53,4 @@ class Signin(Resource):
 
 user_api.add_resource(Signup, '/user/signup')
 user_api.add_resource(Signin, '/user/signin')
+
