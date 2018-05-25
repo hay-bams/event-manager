@@ -3,7 +3,7 @@ attrs==18.1.0
 blinker==1.4
 click==6.7
 coverage==4.5.1
--e git+https://github.com/purpose50/event-manager.git@3a60971282962230f60db7f77aab4b737a088fef#egg=EventManager
+-e git+https://github.com/purpose50/event-manager.git@a44765b6e2c1c726c394d9215a205ff472a0cb58#egg=EventManager
 Flask==1.0.2
 Flask-HTTPAuth==3.2.3
 Flask-Migrate==2.1.1
