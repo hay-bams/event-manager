@@ -11,22 +11,23 @@ migrate = Migrate()
 config_name = os.getenv('FLASK_ENV')
 ma = Marshmallow()
 
+
 def create_app(config_class=app_config['development']):
-  app = Flask(__name__)
-  app.config.from_object(config_class)
-  db.init_app(app)
-  migrate.init_app(app, db)
-  ma.init_app(app)
-  
-  from app.center import center_api 
-  app.register_blueprint(center_api, url_prefix = '/api')
+    app = Flask(__name__)
+    app.config.from_object(config_class)
+    db.init_app(app)
+    migrate.init_app(app, db)
+    ma.init_app(app)
+    
+    # from app.center import center_api
+    # app.register_blueprint(center_api, url_prefix='/api')
 
-  from app.user import user_api
-  app.register_blueprint(user_api, url_prefix = '/api')
+    from app.user import user_bp
+    app.register_blueprint(user_bp, url_prefix='/api')
 
-  from app.event import event_api
-  app.register_blueprint(event_api, url_prefix = '/api')
+    from app.event import event_bp
+    app.register_blueprint(event_bp, url_prefix='/api')
 
-  return app
+    return app
 
 from app import models
